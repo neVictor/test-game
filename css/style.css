@@ -1,0 +1,46 @@
+body {
+  background: -webkit-gradient(linear, left top, left bottom, from(#8442b9), color-stop(lime), to(#f15555));
+  background: linear-gradient(#8442b9, lime, #f15555);
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.hero {
+  position: absolute;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  max-height: 50%;
+  z-index: 100;
+}
+
+.hero__img {
+  display: none;
+}
+
+.hero__img-active {
+  display: block;
+}
+
+.rotete {
+  -webkit-transform: rotateY(180deg);
+          transform: rotateY(180deg);
+}
+
+.game-map {
+  position: absolute;
+  top: 100px;
+  left: 100px;
+}
+
+.game-map__container {
+  position: relative;
+}
+
+.game-map__block {
+  position: absolute;
+  background-color: burlywood;
+}
+/*# sourceMappingURL=style.css.map */
