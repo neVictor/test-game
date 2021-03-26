@@ -1,27 +1,9 @@
 body {
   background: -webkit-gradient(linear, left top, left bottom, from(#8442b9), color-stop(lime), to(#f15555));
   background: linear-gradient(#8442b9, lime, #f15555);
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   overflow: hidden;
-}
-
-.hero {
-  position: absolute;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-  top: 50%;
-  left: 50%;
-  max-height: 50%;
-  z-index: 100;
-}
-
-.hero__img {
-  display: none;
-}
-
-.hero__img-active {
-  display: block;
 }
 
 .rotete {
@@ -29,18 +11,97 @@ body {
           transform: rotateY(180deg);
 }
 
-.game-map {
+.container {
   position: absolute;
-  top: 100px;
-  left: 100px;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
 }
 
-.game-map__container {
+.wrap {
   position: relative;
+  margin: 50vh 50vw;
+  width: 10px;
+  height: 10px;
 }
 
-.game-map__block {
+.hero-sprites {
   position: absolute;
-  background-color: burlywood;
+  top: 50%;
+  left: 50%;
+  z-index: 1000;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+.hero-sprites__img {
+  display: none;
+}
+
+.hero-sprites__img-active {
+  display: block;
+}
+
+.scene-img {
+  width: 100%;
+  height: 100%;
+}
+
+.scene {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.scene {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.scene__block {
+  position: absolute;
+  background-color: wheat;
+  top: 0;
+  left: 0;
+}
+
+.controlls {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+}
+
+.controlls__up {
+  position: absolute;
+  left: 25%;
+  top: 0;
+  width: 50vw;
+  height: 25vh;
+}
+
+.controlls__down {
+  position: absolute;
+  left: 25%;
+  top: 75%;
+  width: 50vw;
+  height: 25vh;
+}
+
+.controlls__left {
+  position: absolute;
+  left: 0;
+  top: 25%;
+  width: 25vw;
+  height: 50vh;
+}
+
+.controlls__right {
+  position: absolute;
+  left: 75%;
+  top: 25%;
+  width: 25vw;
+  height: 50vh;
 }
 /*# sourceMappingURL=style.css.map */

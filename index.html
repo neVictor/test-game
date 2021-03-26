@@ -1,35 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/normalize.css">
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/level-style.css">
-    <title>test 0.0.2 start: 19/03/2021</title>
+    <title>test 0.0.3 start: 19/03/2021</title>
 </head>
-<body>
-    <div style="position:absolute; background-color: aliceblue; z-index: 1000;" id="relative-pos">s</div>
 
-    <div class="hero" id="hero">
-        <img class="hero__img hero__img-active" id="stand" src="./img/rei_stand.png" alt="rei_stand">
-        <img class="hero__img" id="back" src="./img/rei_back.png" alt="rei_back">
-        <img class="hero__img" id="rotate" src="./img/rei_rotate.png" alt="rei_rotate">
+<body>
+    <div class="controlls" id="controlls">
+        <div class="controlls__up" id="KeyW"></div>
+        <div class="controlls__down" id="KeyS"></div>
+        <div class="controlls__left" id="KeyA"></div>
+        <div class="controlls__right" id="KeyD"></div>
     </div>
 
-    <div class="game-map" id="game-map">
-        <div class="game-map__container">
-            <img src="./img/mars.jpg" alt="back">
-            <div class="game-map__block block-1"></div>
-            <div class="game-map__block block-2"></div>
-            <div class="game-map__block block-3"></div>
-            <div class="game-map__block block-4"></div>
-            <div class="game-map__block block-5"></div>
-            <div class="game-map__block block-6"></div>
-            
+    <div class="container" id="container">
+        <div class="wrap">
+            <div class="hero-sprites" id="hero-sprites">
+                <img class="hero-sprites__img hero-sprites__img-active" id="stand" src="./img/rei_stand.png"
+                    alt="rei_stand">
+                <img class="hero-sprites__img" id="back" src="./img/rei_back.png" alt="rei_back">
+                <img class="hero-sprites__img" id="rotate" src="./img/rei_rotate.png" alt="rei_rotate">
+            </div>
+            <div class="scene" id="scene">
+                <img class="scene__img" src="./img/mars.jpg" alt="back">
+
+                <div class="scene__block block-1"></div>
+                <div class="scene__block block-2"></div>
+                <div class="scene__block block-3"></div>
+                <div class="scene__block block-4"></div>
+                <div class="scene__block block-5"></div>
+                <div class="scene__block block-6"></div>
+            </div>
         </div>
     </div>
 
 </body>
 <script src="./js/script.js"></script>
+
 </html>
