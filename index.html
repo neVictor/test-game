@@ -7,16 +7,14 @@
     <link rel="stylesheet" href="./css/normalize.css">
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/level-style.css">
-    <title>test 0.0.3 start: 19/03/2021</title>
+    <title>test 0.0.4, start: 19/03/2021</title>
 </head>
 
 <body>
-    <div class="controlls" id="controlls">
-        <div class="controlls__up" id="KeyW"></div>
-        <div class="controlls__down" id="KeyS"></div>
-        <div class="controlls__left" id="KeyA"></div>
-        <div class="controlls__right" id="KeyD"></div>
-    </div>
+    <div class="controlls__up controlls" id="KeyW"></div>
+    <div class="controlls__down controlls" id="KeyS"></div>
+    <div class="controlls__left controlls" id="KeyA"></div>
+    <div class="controlls__right controlls" id="KeyD"></div>
 
     <div class="container" id="container">
         <div class="wrap">
@@ -35,11 +33,30 @@
                 <div class="scene__block block-4"></div>
                 <div class="scene__block block-5"></div>
                 <div class="scene__block block-6"></div>
+
+                <div class="scene__block block-7">
+                    <img class="scene__block-img" src="./img/fire_gif.webp" alt="fire_gif">
+                </div>
+
+                <div class="scene__block scene__character character-1" id="character-1">
+                    <img class="scene__character-img" src="./img/cirno_sit.png" alt="cirno_sit">
+                </div>
+
+                <div class="scene__block scene__character character-2" id="character-2">
+                    <img class="scene__character-img" src="./img/kira_stay.png" alt="kira_stay">
+                </div>
             </div>
+        </div>
+
+        <div class="speaking-window" id="speaking-window">
+            <span class="speaking-window__name" id="speaking-name"></span>
+            <p class="speaking-window__text" id="speaking-text"></p>
+            <button class="speaking-window__button-next" id="speaking-button-next">></button>
         </div>
     </div>
 
 </body>
+<script src="./js/scenario.js"></script>
 <script src="./js/script.js"></script>
 
 </html>
