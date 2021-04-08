@@ -4,6 +4,7 @@ body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  font-size: 3vh;
 }
 
 .rotete {
@@ -29,7 +30,7 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  z-index: 1000;
+  z-index: 100;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
 }
@@ -42,28 +43,63 @@ body {
   display: block;
 }
 
+.inventory {
+  position: absolute;
+  display: none;
+  -webkit-transform: translate(0, -50%);
+          transform: translate(0, -50%);
+  top: 30%;
+  left: 40vh;
+  width: 44vh;
+  height: 10vh;
+  z-index: 4000;
+}
+
+.inventory__active {
+  display: block;
+}
+
+.inventory__object {
+  display: inline-block;
+  width: 10vh;
+  height: 10vh;
+  background-color: #8542a631;
+}
+
+.inventory__img {
+  width: inherit;
+  height: inherit;
+}
+
 .scene {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: -400px;
+  left: -400px;
 }
 
 .scene__block {
+  z-index: 40;
   position: absolute;
   top: 0;
   left: 0;
 }
 
 .scene__block-img {
+  z-index: 40;
   width: inherit;
   height: inherit;
 }
 
+.scene__character {
+  z-index: 40;
+}
+
 .scene__character-near::before {
-  content: 'F';
+  content: "F";
+  font-size: 16px;
   position: absolute;
   text-align: center;
-  z-index: 2000;
+  z-index: 9000;
   top: 0;
   left: -20px;
   width: 20px;
@@ -74,8 +110,8 @@ body {
 
 .scene__character-img {
   background-color: none;
-  width: 70px;
-  height: 120px;
+  width: inherit;
+  height: inherit;
 }
 
 .speaking-window {
@@ -88,6 +124,7 @@ body {
   height: 20vh;
   background-color: #ffebcd75;
   padding: 2vh;
+  font-size: 1em;
 }
 
 .speaking-window-active {
@@ -112,23 +149,20 @@ body {
 
 .speaking-window__button-next {
   position: absolute;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-  width: 20px;
-  height: 20px;
-  top: 50%;
+  width: 5vh;
+  min-width: 30px;
+  height: 5vh;
+  min-height: 30px;
+  top: 20%;
   left: 90%;
 }
 
 .controlls {
+  z-index: 3000;
   position: absolute;
-  width: 100vw;
-  height: 100vh;
-  z-index: 1000;
 }
 
 .controlls__up {
-  position: absolute;
   left: 25%;
   top: 0;
   width: 50vw;
@@ -136,7 +170,6 @@ body {
 }
 
 .controlls__down {
-  position: absolute;
   left: 25%;
   top: 75%;
   width: 50vw;
@@ -144,7 +177,6 @@ body {
 }
 
 .controlls__left {
-  position: absolute;
   left: 0;
   top: 25%;
   width: 25vw;
@@ -152,10 +184,25 @@ body {
 }
 
 .controlls__right {
-  position: absolute;
   left: 75%;
   top: 25%;
   width: 25vw;
   height: 50vh;
+}
+
+.controlls__inventory {
+  top: 30%;
+  left: 20vh;
+  width: 6vh;
+  min-width: 30px;
+  height: 6vh;
+  min-height: 30px;
+  background-color: #f0808081;
+}
+
+@media (max-height: 300px) {
+  body {
+    font-size: 7vh;
+  }
 }
 /*# sourceMappingURL=style.css.map */

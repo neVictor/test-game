@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="./css/normalize.css">
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/level-style.css">
-    <title>test 0.0.4, start: 19/03/2021</title>
+    <title>test 0.0.4.5, start: 19/03/2021</title>
 </head>
 
 <body>
@@ -15,35 +15,40 @@
     <div class="controlls__down controlls" id="KeyS"></div>
     <div class="controlls__left controlls" id="KeyA"></div>
     <div class="controlls__right controlls" id="KeyD"></div>
+    <div class="controlls__inventory controlls" id="inventory-button"></div>
 
     <div class="container" id="container">
+        <div class="inventory" id="inventory">
+            <div class="inventory__object" id="inventory-item_0"></div>
+            <div class="inventory__object" id="inventory-item_1"></div>
+            <div class="inventory__object" id="inventory-item_2"></div>
+            <div class="inventory__object" id="inventory-item_3"></div>
+        </div>
         <div class="wrap">
-            <div class="hero-sprites" id="hero-sprites">
-                <img class="hero-sprites__img hero-sprites__img-active" id="stand" src="./img/rei_stand.png"
-                    alt="rei_stand">
-                <img class="hero-sprites__img" id="back" src="./img/rei_back.png" alt="rei_back">
-                <img class="hero-sprites__img" id="rotate" src="./img/rei_rotate.png" alt="rei_rotate">
+            <!-- главный герой -->
+            <div class="hero-sprites" id="hero">
+                <img class="hero-sprites__img stand hero-sprites__img-active" src="./img/rei_stand.png" alt="rei_stand">
+                <img class="hero-sprites__img back" src="./img/rei_back.png" alt="rei_back">
+                <img class="hero-sprites__img rotate" src="./img/rei_rotate.png" alt="rei_rotate">
             </div>
             <div class="scene" id="scene">
                 <img class="scene__img" src="./img/mars.jpg" alt="back">
-
-                <div class="scene__block block-1"></div>
-                <div class="scene__block block-2"></div>
-                <div class="scene__block block-3"></div>
-                <div class="scene__block block-4"></div>
-                <div class="scene__block block-5"></div>
-                <div class="scene__block block-6"></div>
-
-                <div class="scene__block block-7">
+                <!-- блоки -->
+                <div class="scene__block block-1">
                     <img class="scene__block-img" src="./img/fire_gif.webp" alt="fire_gif">
                 </div>
-
+                <!-- персонажи -->
                 <div class="scene__block scene__character character-1" id="character-1">
                     <img class="scene__character-img" src="./img/cirno_sit.png" alt="cirno_sit">
                 </div>
-
                 <div class="scene__block scene__character character-2" id="character-2">
                     <img class="scene__character-img" src="./img/kira_stay.png" alt="kira_stay">
+                </div>
+                <div class="scene__block scene__character character-3" id="character-3">
+                    <img class="scene__character-img" src="./img/naoto_viving.gif" alt="naoto_Viving">
+                </div>
+                <div class="scene__block scene__character character-4" id="character-4">
+                    <img class="scene__character-img" src="./img/bulki_s_makom.png" alt="bulki_s_makom">
                 </div>
             </div>
         </div>
@@ -56,7 +61,13 @@
     </div>
 
 </body>
+<script>
+    window.onblur = () => document.title = 'документ неактивен'
+    window.onfocus = () => document.title = 'test 0.0.4.5, start: 19/03/2021';
+</script>
+<script src="./js/itemlist.js"></script>
 <script src="./js/scenario.js"></script>
+<script src="./js/classes.js"></script>
 <script src="./js/script.js"></script>
 
 </html>

@@ -1,12 +1,14 @@
 // поиск html блоков 
+// основные
 let scene = document.getElementById('scene');
-let hero = document.getElementById('hero-sprites');
-
+let hero = document.getElementById('hero');
+// блоки и персонажи
 let levelBlocks = scene.getElementsByClassName('scene__block');
 let levelСharacters = scene.getElementsByClassName('scene__character');
-
-let controlls = document.getElementById('controlls');
-
+// инвентарь 
+let inventory = document.getElementById('inventory');
+let inventoryButton = document.getElementById('inventory-button');
+// диалоговые окна 
 let speakingWindow = document.getElementById('speaking-window');
 let speakingName = document.getElementById('speaking-name');
 let speakingText = document.getElementById('speaking-text');
@@ -14,194 +16,172 @@ let speakingButtonNext = document.getElementById('speaking-button-next')
 
 // сет для нажатых клавишь
 let KeyPressed = new Set();
+let testClass = new TestClass(inventory);
 
-// СОСтояние сцены 
-let scenePosition = {
-    x: 0,
-    y: 0,
+// состояние обьектов игры
+let sceneInformation = {
+    x: -400,
+    y: -400,
     step: 6,
 }
-
-// состояние героя
-let heroDesc = {
+let heroInformation = {
     stringCount: 0,
     interlocutorName: "",
     activeSprite: 'stand',
     activeSpeaking: false
 };
-
+let inventoryItems = [
+    { name: '', purpose: '', img: '' },
+    { name: '', purpose: '', img: '' },
+    { name: '', purpose: '', img: '' },
+    { name: '', purpose: '', img: '' },
+];
+let heroClientRect = hero.getBoundingClientRect();
 // отслеживание нажатий
 // для клавиатуры: 
-document.addEventListener('keydown', (event) => { KeyPressed.add(event.code); heroVectorCheck() });
+document.addEventListener('keydown', (event) => {
+    KeyPressed.add(event.code);
+    heroVectorCheck();
+    if (event.code == 'KeyE') {
+        inventory.classList.toggle('inventory__active');
+    }
+});
 document.addEventListener('keyup', (event) => { KeyPressed.delete(event.code); heroVectorCheck() });
 // для экрана:
 document.addEventListener("pointerdown", (event) => {
     KeyPressed.add(event.target.id);
     heroVectorCheck();
-
-    if (event.target.id == "controlls") KeyPressed.clear();
-
     if (event.target.closest('div').classList.contains('scene__character')) {
-        let character = event.target.closest('div');
-        let heroClientRect = hero.getBoundingClientRect();
-        let characterClientRect = character.getBoundingClientRect();
+        KeyPressed.add("KeyF");
+        if (event.target.closest('div').id != '' && heroInformation.interlocutorName == '') heroInformation.interlocutorName = event.target.closest('div').id;
+    }
+});
+document.addEventListener("pointerup", (event) => {
+    KeyPressed.delete(event.target.id);
+    if (event.target.closest('div').classList.contains('scene__character')) { KeyPressed.delete("KeyF") };
+});
 
-        // код повторяется, нужно решить это (потом)
-        if ((characterClientRect.x - 50) < (heroClientRect.x + heroClientRect.width) &&
-            (characterClientRect.x + characterClientRect.width + 50) > heroClientRect.x &&
-            (characterClientRect.y - 50) < (heroClientRect.x + heroClientRect.height) &&
-            (characterClientRect.y + characterClientRect.height + 50) > heroClientRect.y) {
-
-            character.classList.add('scene__character-near');
-
-            // проверка на в F в сете и другие активные диалоги
-            if (!heroDesc.activeSpeaking && heroDesc.interlocutorName == '') {
-                heroDesc.activeSpeaking = true;
-                heroDesc.interlocutorName = character.id;
-
-                speakingWindow.classList.add('speaking-window-active');
-
-                speakingName.innerHTML = scenario[character.id][heroDesc.stringCount].name;
-                speakingText.innerHTML = scenario[character.id][heroDesc.stringCount].text;
-                heroDesc.stringCount++;
-            }
-
+// события нажатий на сцене
+speakingButtonNext.onclick = () => {
+    testClass.scenarioWork(scenario, heroInformation.interlocutorName, heroInformation.stringCount, (scenarioObj, script, status) => {
+        if (!status || heroInformation.interlocutorName == '') {
+            KeyPressed.delete('KeyF')
+            heroInformation.activeSpeaking = false;
+            heroInformation.interlocutorName = '';
+            heroInformation.stringCount = 0;
+            speakingWindow.classList.remove('speaking-window-active');
+            return;
+        }
+        speakingText.innerHTML = scenarioObj.text;
+        speakingName.innerHTML = scenarioObj.name;
+        if (script === null) {
+            console.info(`name: ${heroInformation.interlocutorName}, stringCount: ${heroInformation.stringCount}; script is null`)
         } else {
-            if (heroDesc.interlocutorName == character.id) {
-                heroDesc.activeSpeaking = false;
-                heroDesc.interlocutorName = '';
+            script(character, heroClientRect, inventoryItems);
+        };
+        heroInformation.stringCount++;
+    });
+}
+inventoryButton.onclick = () => {
+    inventory.classList.toggle('inventory__active');
+}
+inventory.onclick = (event) => {
+    if (event.target.closest('.inventory__object').children.length == 0) return;
+    let inventoryObj = event.target.closest('.inventory__object');
+    inventoryItems[inventoryObj.id.split('_')[1]] = {};
+    inventory.children[inventoryObj.id.split('_')[1]].innerHTML = '';
+    console.log(inventoryObj.id.split('_')[1]);
+}
+
+// изменеие (поворот, смена спрайта) персонажа, в зависимости от напраления движения 
+function heroVectorCheck() {
+    KeyPressed.forEach((value) => {
+        if (value == 'KeyA') { hero.getElementsByClassName(heroInformation.activeSprite)[0].style.transform = 'rotateY(180deg)' };
+        if (value == 'KeyD') { hero.getElementsByClassName(heroInformation.activeSprite)[0].style.transform = 'rotateY(0)' };
+
+        if ((value == 'KeyA' || value == 'KeyD') && KeyPressed.size <= 1) {
+            hero.getElementsByClassName(heroInformation.activeSprite)[0].classList.remove('hero-sprites__img-active');
+            heroInformation.activeSprite = 'rotate'
+            hero.getElementsByClassName(heroInformation.activeSprite)[0].classList.add('hero-sprites__img-active');
+            return;
+        };
+        if (value == 'KeyW') {
+            hero.getElementsByClassName(heroInformation.activeSprite)[0].classList.remove('hero-sprites__img-active');
+            heroInformation.activeSprite = 'back';
+            hero.getElementsByClassName(heroInformation.activeSprite)[0].classList.add('hero-sprites__img-active')
+        };
+        if (value == 'KeyS') {
+            if (KeyPressed.size <= 1) {
+                hero.getElementsByClassName(heroInformation.activeSprite)[0].classList.remove('hero-sprites__img-active');
+                heroInformation.activeSprite = 'stand'
+                hero.getElementsByClassName(heroInformation.activeSprite)[0].classList.add('hero-sprites__img-active');
+                return;
+            };
+            hero.getElementsByClassName(heroInformation.activeSprite)[0].classList.remove('hero-sprites__img-active');
+            heroInformation.activeSprite = 'rotate'
+            hero.getElementsByClassName(heroInformation.activeSprite)[0].classList.add('hero-sprites__img-active');
+        };
+    });
+}
+
+setInterval(() => {
+    heroClientRect = hero.getBoundingClientRect();
+}, 500);
+
+//основная функция игры (обновление разз в 10 милисикунд)
+setInterval(() => {
+    // не включать цикл без нажатых клавиш
+    if (KeyPressed.size == 0) return;
+    sceneStep = KeyPressed.size >= 2 ? (sceneInformation.step * 0.7) : sceneInformation.step;
+    // проверка на нахождение героя возле персонажей  
+    for (character of levelСharacters) {
+        let characterClientRect = character.getBoundingClientRect();
+        // проверка расстояний 
+        if (testClass.checkCollision(characterClientRect, heroClientRect, 50, 50)) {
+            character.classList.add('scene__character-near');
+            // проверка на в F в сете и другие активные диалоги
+            if (KeyPressed.has('KeyF') && heroInformation.interlocutorName == '') heroInformation.interlocutorName = character.id;
+
+            if (KeyPressed.has('KeyF') && !heroInformation.activeSpeaking && heroInformation.interlocutorName != '') {
+                testClass.scenarioWork(scenario, heroInformation.interlocutorName, heroInformation.stringCount, (scenarioObj, script, status) => {
+                    heroInformation.activeSpeaking = true;
+                    speakingWindow.classList.add('speaking-window-active');
+                    speakingText.innerHTML = scenarioObj.text;
+                    speakingName.innerHTML = scenarioObj.name;
+                    if (script === null) {
+                        console.info(`name: ${heroInformation.interlocutorName}, stringCount: ${heroInformation.stringCount}; script is null`)
+                    } else {
+                        script(character, heroClientRect, inventory);
+                    };
+                    heroInformation.stringCount++;
+                });
+            }
+        } else {
+            if (heroInformation.interlocutorName == character.id) {
+                heroInformation.activeSpeaking = false;
+                heroInformation.stringCount = 0;
+                heroInformation.interlocutorName = '';
                 speakingWindow.classList.remove('speaking-window-active');
             }
             // если персонаж отошел то: 
             character.classList.remove('scene__character-near');
         }
     };
+    // изменение положения карты (не игрока!)
+    if (KeyPressed.has('KeyW')) { scene.style.top = (sceneInformation.y += sceneStep) + 'px' }
+    if (KeyPressed.has('KeyS')) { scene.style.top = (sceneInformation.y -= sceneStep) + 'px' }
+    if (KeyPressed.has('KeyD')) { scene.style.left = (sceneInformation.x -= sceneStep) + 'px' }
+    if (KeyPressed.has('KeyA')) { scene.style.left = (sceneInformation.x += sceneStep) + 'px' }
+    // проверка на колизию с блоками 
+    for (block of levelBlocks) {
+        let blockClientRect = block.getBoundingClientRect();
+        if (testClass.checkCollision(heroClientRect, blockClientRect, 0, -100)) {
 
-});
-document.addEventListener("pointerup", (event) => { KeyPressed.delete(event.target.id); if (event.target.id == "controlls") KeyPressed.clear(); heroVectorCheck() });
-document.addEventListener("pointerleave", (event) => { if (event.target.id == "controlls") KeyPressed.clear() });
-
-// нажатие на кнопку продвижения диалога
-speakingButtonNext.onclick = () => {
-    speakingCheck(heroDesc, scenario)
-}
-
-// изменеие (поворот, смена спрайта) персонажа, в зависимости от напраления движения 
-
-function vectorСhange(heroObj, activeClass, newSpriteName) {
-    document.getElementById(heroObj.activeSprite).classList.remove(activeClass);
-    document.getElementById(newSpriteName).classList.add(activeClass);
-    heroObj.activeSprite = newSpriteName;
-}
-
-function heroVectorCheck() {
-    KeyPressed.forEach((value) => {
-        if (value == 'KeyA') { document.getElementById(heroDesc.activeSprite).classList.add('rotete') };
-        if (value == 'KeyD') { document.getElementById(heroDesc.activeSprite).classList.remove('rotete') };
-
-        if (value == 'KeyS' && KeyPressed.size <= 1) { vectorСhange(heroDesc, 'hero-sprites__img-active', 'stand'); return };
-        if ((value == 'KeyA' || value == 'KeyD') && KeyPressed.size <= 1) { vectorСhange(heroDesc, 'hero-sprites__img-active', 'rotate'); return; };
-
-        if (value == 'KeyW') { vectorСhange(heroDesc, 'hero-sprites__img-active', 'back') };
-        if (value == 'KeyS') { vectorСhange(heroDesc, 'hero-sprites__img-active', 'rotate') };
-    });
-}
-// функция для прокрутки диалога
-function speakingCheck(heroDesc, scenario) {
-    if (heroDesc.stringCount >= scenario[heroDesc.interlocutorName].length) {
-        heroDesc.activeSpeaking = false;
-        heroDesc.interlocutorName = '';
-        heroDesc.stringCount = 0;
-        speakingWindow.classList.remove('speaking-window-active');
-        return;
-    }
-    speakingName.innerHTML = scenario[heroDesc.interlocutorName][heroDesc.stringCount].name;
-    speakingText.innerHTML = scenario[heroDesc.interlocutorName][heroDesc.stringCount].text;
-    heroDesc.stringCount++;
-}
-
-//основная функция игры (обновление разз в 10 милисикунд)
-setInterval(() => {
-    if (KeyPressed.size == 0) return;
-    scenePosition.step = KeyPressed.size >= 2 ? 4 : 5;
-
-    KeyPressed.forEach((value) => {
-        let heroClientRect = hero.getBoundingClientRect();
-
-        // проверка на нахождение героя возле персонажей  
-        for (character of levelСharacters) {
-            let characterClientRect = character.getBoundingClientRect();
-
-            // проверка расстояний 
-            if ((characterClientRect.x - 50) < (heroClientRect.x + heroClientRect.width) &&
-                (characterClientRect.x + characterClientRect.width + 50) > heroClientRect.x &&
-                (characterClientRect.y - 50) < (heroClientRect.x + heroClientRect.height) &&
-                (characterClientRect.y + characterClientRect.height + 50) > heroClientRect.y) {
-
-                character.classList.add('scene__character-near');
-
-                // проверка на в F в сете и другие активные диалоги
-                if (value == 'KeyF' && !heroDesc.activeSpeaking && heroDesc.interlocutorName == '') {
-
-                    heroDesc.activeSpeaking = true;
-                    heroDesc.interlocutorName = character.id;
-
-                    speakingWindow.classList.add('speaking-window-active');
-
-                    speakingName.innerHTML = scenario[character.id][heroDesc.stringCount].name;
-                    speakingText.innerHTML = scenario[character.id][heroDesc.stringCount].text;
-                    heroDesc.stringCount++;
-                }
-
-            } else {
-                if (heroDesc.interlocutorName == character.id) {
-                    heroDesc.activeSpeaking = false;
-                    heroDesc.interlocutorName = '';
-                    speakingWindow.classList.remove('speaking-window-active');
-                }
-                // если персонаж отошел то: 
-                character.classList.remove('scene__character-near');
-            }
-        };
-
-        // изменение положения карты (не игрока!)
-        if (value == 'KeyW') { scene.style.top = (scenePosition.y += scenePosition.step) + 'px' }
-        if (value == 'KeyS') { scene.style.top = (scenePosition.y -= scenePosition.step) + 'px' }
-        if (value == 'KeyD') { scene.style.left = (scenePosition.x -= scenePosition.step) + 'px' }
-        if (value == 'KeyA') { scene.style.left = (scenePosition.x += scenePosition.step) + 'px' }
-
-        // проверка на колизию с блоками 
-        for (block of levelBlocks) {
-            let blockClientRect = block.getBoundingClientRect();
-
-            // лево - право
-            if (value == 'KeyA' && (blockClientRect.x + blockClientRect.width) >= heroClientRect.x &&
-                blockClientRect.x <= heroClientRect.x &&
-                heroClientRect.y <= (blockClientRect.y + blockClientRect.height) &&
-                (heroClientRect.y + heroClientRect.height) >= blockClientRect.y) {
-                scene.style.left = (scenePosition.x -= scenePosition.step) + 'px';
-
-            }
-            if (value == 'KeyD' && (heroClientRect.x + heroClientRect.width) >= blockClientRect.x &&
-                heroClientRect.x <= blockClientRect.x &&
-                heroClientRect.y <= (blockClientRect.y + blockClientRect.height) &&
-                (heroClientRect.y + heroClientRect.height) >= blockClientRect.y) {
-                scene.style.left = (scenePosition.x += scenePosition.step) + 'px';
-            }
-            // вверх - вниз
-            if (value == 'KeyS' && (heroClientRect.y + heroClientRect.height) >= blockClientRect.y &&
-                heroClientRect.y <= blockClientRect.y &&
-                heroClientRect.x <= (blockClientRect.x + blockClientRect.width) &&
-                (heroClientRect.x + heroClientRect.width) >= blockClientRect.x) {
-                scene.style.top = (scenePosition.y += scenePosition.step) + 'px';
-            }
-            if (value == 'KeyW' && (blockClientRect.y + blockClientRect.height) >= heroClientRect.y &&
-                blockClientRect.y <= heroClientRect.y &&
-                heroClientRect.x <= (blockClientRect.x + blockClientRect.width) &&
-                (heroClientRect.x + heroClientRect.width) >= blockClientRect.x) {
-                scene.style.top = (scenePosition.y -= scenePosition.step) + 'px';
-
-            }
-        };
-    });
+            if (KeyPressed.has('KeyD')) scene.style.left = (sceneInformation.x += sceneStep) + 'px';
+            if (KeyPressed.has('KeyA')) scene.style.left = (sceneInformation.x -= sceneStep) + 'px';
+            if (KeyPressed.has('KeyS')) scene.style.top = (sceneInformation.y += sceneStep) + 'px';
+            if (KeyPressed.has('KeyW')) scene.style.top = (sceneInformation.y -= sceneStep) + 'px';
+        }
+    };
 }, 10);
+

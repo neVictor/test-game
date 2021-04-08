@@ -1,52 +1,4 @@
 .block-1 {
-  top: 100px;
-  left: 50px;
-  width: 50px;
-  height: 200px;
-  background-color: red;
-}
-
-.block-2 {
-  top: 50px;
-  left: 100px;
-  width: 50px;
-  height: 50px;
-  background-color: wheat;
-}
-
-.block-3 {
-  top: 150px;
-  left: 100px;
-  width: 50px;
-  height: 50px;
-  background-color: wheat;
-}
-
-.block-4 {
-  top: 100px;
-  left: 150px;
-  width: 50px;
-  height: 200px;
-  background-color: wheat;
-}
-
-.block-5 {
-  top: 600px;
-  left: 150px;
-  width: 50px;
-  height: 300px;
-  background-color: wheat;
-}
-
-.block-6 {
-  top: 900px;
-  left: 150px;
-  width: 350px;
-  height: 50px;
-  background-color: wheat;
-}
-
-.block-7 {
   top: 700px;
   left: 700px;
   width: 100px;
@@ -54,12 +6,26 @@
 }
 
 .character-1 {
+  width: 70px;
   top: 670px;
   left: 900px;
 }
 
 .character-2 {
+  width: 70px;
   top: 670px;
   left: 550px;
+}
+
+.character-3 {
+  width: 90px;
+  top: 600px;
+  left: 650px;
+}
+
+.character-4 {
+  width: 140px;
+  top: 100px;
+  left: 700px;
 }
 /*# sourceMappingURL=level-style.css.map */
