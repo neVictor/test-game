@@ -61,11 +61,11 @@
 
 <script>
     let baseScript = document.createElement('script');
-    baseScript.src = document.location.origin + '/js/main.js';
+    baseScript.src = document.location.origin + '/test-game/js/main.js';
     document.documentElement.append(baseScript);
 
     baseScript.onload = () => {
-        if (document.location.href != (JSON.parse(getCookie('game-information')).pathToLevels + JSON.parse(getCookie('game-information')).levelFolderName + JSON.parse(getCookie('current-level')).index + '/index.html')) {
+        if (document.location.href + "/test-game/" != (JSON.parse(getCookie('game-information')).pathToLevels + JSON.parse(getCookie('game-information')).levelFolderName + JSON.parse(getCookie('current-level')).index + '/index.html')) {
             document.location.href = document.location.origin;
         }
 
@@ -73,9 +73,9 @@
         levelScript.src = './loader.js';
         document.documentElement.append(levelScript);
 
-        imageLoader(document.location.origin + '/img/preloader.gif').then(preloaderGif => {
-            preloaderGif.classList.add('preloader__image');
-            document.getElementById('preloader').append(preloaderGif)
+        imageLoader(document.location.origin + "/test-game/img/preloader.gif").then(preloaderGif => {
+            preloaderGif.classList.add("preloader__image");
+            document.getElementById("preloader").append(preloaderGif)
         })
     }
 </script>
