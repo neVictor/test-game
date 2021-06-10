@@ -1,7 +1,7 @@
 'use strict';
 
 
-const PathToLevels = document.location.origin + '/levels/';
+const PathToLevels = document.location.origin + '/test-game/levels/';
 const LevelFolderName = 'level_';
 
 let gameNavHTML = document.getElementById('game-nav');
