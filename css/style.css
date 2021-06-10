@@ -258,30 +258,30 @@ body {
 
 #KeyW {
   top: 0;
-  left: 25%;
-  width: 50%;
-  height: 25%;
+  left: 25vw;
+  width: 50vw;
+  height: 25vh;
 }
 
 #KeyS {
-  top: 75%;
-  left: 25%;
-  width: 50%;
-  height: 25%;
+  top: 75vh;
+  left: 25vw;
+  width: 5vw;
+  height: 75vh;
 }
 
 #KeyA {
-  top: 25%;
+  top: 25vh;
   left: 0;
-  width: 25%;
-  height: 50%;
+  width: 25vw;
+  height: 50vh;
 }
 
 #KeyD {
-  top: 25%;
-  left: 75%;
-  width: 25%;
-  height: 50%;
+  top: 25vh;
+  left: 75vw;
+  width: 25vw;
+  height: 50vh;
 }
 
 @media (max-height: 300px) {
