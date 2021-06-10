@@ -4,6 +4,7 @@ let heroElementHTML = document.getElementById("hero-element");
 let sceneElementHTML = document.getElementById("scene");
 let itemsListIcons = new Object();
 
+let gameLocation = document.location.origin + "/test-game";
 let blocksNumberHTML = 1;
 
 let levelInformation = fetch("./level-information.json")
@@ -14,14 +15,14 @@ let levelInformation = fetch("./level-information.json")
     });
 
 
-styleLoader([document.location.origin + "/css/style.css", "./level-style.css"]);
+styleLoader([gameLocation + "/css/style.css", "./level-style.css"]);
 
 // Я действительно (пока что) не знаю как сделать загрузку ресурсов лучше
 // I really don"t know how to load resources better, sorry
 
 elementLoader({
-    "background-1": document.location.origin + "/img/background.png",
-    "block_1": document.location.origin + "/img/fire_gif.webp",
+    "background-1": gameLocation + "/img/background.png",
+    "block_1": gameLocation + "/img/fire_gif.webp",
 }).then(blockLoadedTexture => {
     createBlocksHTML("scene__blocks", "block", sceneElementHTML, blocksNumberHTML, blockLoadedTexture);
     if (blockLoadedTexture["background-1"] !== undefined) {
@@ -33,24 +34,24 @@ elementLoader({
     sceneElementHTML.style.left = JSON.parse(getCookie("current-level")).scenePositionX + "px";
 
     elementLoader({
-        "rei_back": document.location.origin + "/img/rei_back.png",
-        "rei_rotate": document.location.origin + "/img/rei_rotate.png",
-        "rei_stand": document.location.origin + "/img/rei_stand.png",
+        "rei_back": gameLocation + "/img/rei_back.png",
+        "rei_rotate": gameLocation + "/img/rei_rotate.png",
+        "rei_stand": gameLocation + "/img/rei_stand.png",
     }).then(heroLoadedSprites => {
         appendHeroHTML(heroElementHTML, "hero-element__image", heroLoadedSprites);
         elementLoader({
-            "character-1": document.location.origin + "/img/cirno_sit.png",
-            "character-2": document.location.origin + "/img/kira_stay.png",
-            "character-3": document.location.origin + "/img/naoto_vibing.gif",
-            "character-4": document.location.origin + "/img/bulki_s_makom.png",
+            "character-1": gameLocation + "/img/cirno_sit.png",
+            "character-2": gameLocation + "/img/kira_stay.png",
+            "character-3": gameLocation + "/img/naoto_vibing.gif",
+            "character-4": gameLocation + "/img/bulki_s_makom.png",
         }).then(characterLoadedSprites => {
             appendCharactersHTML(sceneElementHTML, "scene__character", characterLoadedSprites, ["scene__blocks"]);
             elementLoader({
-                "bulochka-s-makom": document.location.origin + "/img/bulochka-s-makom.png",
-                "bulochka-s-koriczej": document.location.origin + "/img/bulochka-s-koriczej.png"
+                "bulochka-s-makom": gameLocation + "/img/bulochka-s-makom.png",
+                "bulochka-s-koriczej": gameLocation + "/img/bulochka-s-koriczej.png"
             }).then(itemsListLoadedIcons => {
                 itemsListIcons = itemsListLoadedIcons;
-                scriptLoader([document.location.origin + "/js/engine.js", "./other-function.js"]);
+                scriptLoader([gameLocation + "/js/engine.js", "./other-function.js"]);
             });
         })
     });
