@@ -65,10 +65,6 @@
     document.documentElement.append(baseScript);
 
     baseScript.onload = () => {
-        if (document.location.href + "/test-game/" != (JSON.parse(getCookie('game-information')).pathToLevels + JSON.parse(getCookie('game-information')).levelFolderName + JSON.parse(getCookie('current-level')).index + '/index.html')) {
-            document.location.href = document.location.origin;
-        }
-
         let levelScript = document.createElement('script');
         levelScript.src = './loader.js';
         document.documentElement.append(levelScript);
