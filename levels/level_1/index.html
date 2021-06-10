@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test 0.0.6, start: 19/03/2021</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    body,
+    .wrap {
+        overflow: hidden;
+    }
+
+    .preloader {
+        position: fixed;
+        background-color: #018281;
+        width: 100%;
+        height: 100%;
+        z-index: 1000;
+    }
+
+    .preloader__image {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        top: 50%;
+        left: 50%;
+    }
+</style>
+
+<body>
+    <div class="preloader" id="preloader"></div>
+
+    <div class="wrap">
+        <div class="container">
+            <div class="hero-element" id="hero-element"></div>
+            <div class="scene" id="scene"></div>
+        </div>
+        <div class="inventory" id="inventory">
+        </div>
+        <div class="interaction-window" id="interaction-window">
+            <span class="interaction-window__name" id="interaction-window-name">Name</span>
+            <button class="interaction-window__button-next" id="interaction-window-button-next">
+                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 10 10">
+                    <polygon points="0,0 0,10 10,5" fill="currentColor"/>
+                </svg>
+            </button>
+        </div>
+        <div class="controls-panel" id="KeyW"></div>
+        <div class="controls-panel" id="KeyS"></div>
+        <div class="controls-panel" id="KeyA"></div>
+        <div class="controls-panel" id="KeyD"></div>
+    </div>
+</body>
+
+<script>
+    let baseScript = document.createElement('script');
+    baseScript.src = document.location.origin + '/js/main.js';
+    document.documentElement.append(baseScript);
+
+    baseScript.onload = () => {
+        if (document.location.href != (JSON.parse(getCookie('game-information')).pathToLevels + JSON.parse(getCookie('game-information')).levelFolderName + JSON.parse(getCookie('current-level')).index + '/index.html')) {
+            document.location.href = document.location.origin;
+        }
+
+        let levelScript = document.createElement('script');
+        levelScript.src = './loader.js';
+        document.documentElement.append(levelScript);
+
+        imageLoader(document.location.origin + '/img/preloader.gif').then(preloaderGif => {
+            preloaderGif.classList.add('preloader__image');
+            document.getElementById('preloader').append(preloaderGif)
+        })
+    }
+</script>
+
+</html>

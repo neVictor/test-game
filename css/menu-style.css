@@ -1,0 +1,60 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  width: 100%;
+  height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  background: -webkit-gradient(linear, left top, left bottom, from(#9595f7), to(#faea8c)) no-repeat;
+  background: linear-gradient(#9595f7, #faea8c) no-repeat;
+}
+
+.information {
+  width: 100%;
+  margin-bottom: 50px;
+}
+
+.information__game-name {
+  display: block;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  margin: 20px auto;
+}
+
+.game-nav {
+  max-width: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.level-button {
+  margin: 5px;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  
+}
+
+.level-button:hover {
+  -webkit-transition: .2s;
+  transition: .2s;
+}
+/*# sourceMappingURL=menu-style.css.map */
